@@ -9,7 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "post-build": "node post-build.js",
-    "format": "npx onchange \"{pages,styles,components}/**/*.{js,ts,tsx,css,scss}\" --npx prettier --write {{changed}} --ignore-path .gitignore"
+    "format": "npx onchange \"{pages,styles,components}/**/*.{ts,tsx,css,scss}\" --npx prettier --write {{changed}} --ignore-path .gitignore"
   },
   "dependencies": {
     "@aws-sdk/client-cognito-identity-provider": "^3.267.0",
