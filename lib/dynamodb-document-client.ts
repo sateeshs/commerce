@@ -1,5 +1,5 @@
 import {DeleteItemCommandInput, DynamoDBClient, DynamoDBClientConfig, QueryCommand, ScanCommand, ScanCommandInput} from "@aws-sdk/client-dynamodb";
-import {DeleteCommand, DynamoDBDocumentClient, QueryCommandInput, ScanCommandOutput, TranslateConfig} from "@aws-sdk/lib-dynamodb";
+import {DeleteCommand, DynamoDBDocumentClient, PutCommand, PutCommandInput, QueryCommandInput, ScanCommandOutput, TranslateConfig} from "@aws-sdk/lib-dynamodb";
 import {unmarshall} from "@aws-sdk/util-dynamodb";
 
 class DocumentDbClient {
@@ -21,6 +21,12 @@ class DocumentDbClient {
         const results = await this.client.send(command) as Omit<ScanCommandOutput, 'Items'> & {Items?: Record<string, any>[]};
         const unmarshallResults = results.Items?.map((v,i) => unmarshall(v));
         results.Items = unmarshallResults;
+        return results;
+    }
+
+    public async saveItem<T>(data: PutCommandInput) {
+        const command = new PutCommand(data);
+        const results = await this.ddbDocClient.send(command);
         return results;
     }
 
