@@ -42,14 +42,14 @@ class DocumentDbClient {
 
         try {
 
-            do {
+            //do {
                 const results = await this.client.send(new ScanCommand(data)) as Omit<ScanCommandOutput, 'Items'> & {Items?: Record<string, any>[]} & {Items?: T[]};
                 const {Items, LastEvaluatedKey} = results;
                 lastKeyEvaluated = results.LastEvaluatedKey;
                 const unmarshallResults = Items?.map((v,i) => unmarshall(v));
                 unmarshallResults?.map((v,i) => finalResults.push(v));
                 data.ExclusiveStartKey = LastEvaluatedKey;
-            } while (lastKeyEvaluated != null)
+            //} while (lastKeyEvaluated != null)
             return finalResults;
 
         } catch(e) {
