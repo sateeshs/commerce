@@ -49,7 +49,7 @@ class DocumentDbClient {
                 const unmarshallResults = Items?.map((v,i) => unmarshall(v));
                 unmarshallResults?.map((v,i) => finalResults.push(v));
                 data.ExclusiveStartKey = LastEvaluatedKey;
-            //} while (lastKeyEvaluated != null)
+            //} while (typeof lastKeyEvaluated !== "undefined")
             return finalResults;
 
         } catch(e) {

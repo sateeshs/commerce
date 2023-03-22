@@ -1,6 +1,6 @@
 import { useState, createContext, useContext, ReactNode } from "react";
 
-type clientWizardType= {
+type clientWizardType1= {
   data: any,
 // current: number,
 // prevous: number,
@@ -10,7 +10,7 @@ setFormValues: (value: any) => void,
 
 } 
 
-const clientWizardTypeDefaultValue: clientWizardType = {
+const clientWizardTypeDefaultValue: clientWizardType1 = {
   data: {},
 // current: 0,
 // prevous: -1,
@@ -19,7 +19,7 @@ close: () =>{},
 setFormValues: (value: any) => {},
 } 
 
- const ClientWizardFormContext = createContext<clientWizardType>(clientWizardTypeDefaultValue);
+ const ClientWizardFormContext = createContext<clientWizardType1>(clientWizardTypeDefaultValue);
 //export default ClientWizardFormContext;
 export function useClientWizard() {
     return useContext(ClientWizardFormContext);

@@ -1,0 +1,23 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - npm install --legacy-peer-deps
+    build:
+      commands:
+        - echo "AWS_BRANCH=$AWS_BRANCH" >> .env
+        - echo "REGION=$REGION" >> .env
+        - echo "DYNAMO_TABLE=$YHS_ECOM_TABLE" >> .env
+        - env | grep -e ACCESS_  >> .env
+        - env | grep -e COGNITO_  >> .env
+        - env | grep -e NEXT_AUTH_  >> .env
+        - npm run build
+        - npm run post-build
+  artifacts:
+    baseDirectory: .next
+    files:
+      - '**/*'
+  catch:
+    paths:
+      - node_modules/**/*
