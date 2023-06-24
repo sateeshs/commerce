@@ -20,6 +20,8 @@ export const validate = (schema: OptionalObjectSchema<ObjectShape>, handler: Nex
                     return res.status(400).json(e);
                 }
             }
+
+            await handler(req, res);
     }
 
 }

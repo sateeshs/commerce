@@ -5,6 +5,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 First, run the development server:
 
 ```bash
+npx create-next-app@latest –experimental-app
+
 npm run dev
 # or
 yarn dev
@@ -39,4 +41,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 [Upload file](https://github.com/codersteps/nextjs_file_uploader)
 [NextJS Sample](https://github.com/vercel/examples)
 [S3 Upload](https://github.com/vercel/examples/tree/main/solutions/aws-s3-image-upload)
+(https://awstip.com/upload-file-in-chunks-to-aws-s3-using-nodejs-1d0022681e1c)
 [Kinesis](https://dev.to/aws-builders/how-to-trigger-an-aws-lambda-from-kinesis-5381)
+[cdk] (https://github.com/sateeshs/cdk-compliant-aurora-nextjs)
+(https://medium.com/@srhise/deploying-next-js-on-aws-fargate-with-aws-cloud-development-kit-cdk-5b433257365c)
+[amplify cdk] (https://dev.to/kumo/deploying-nextjs-13-with-amplify-cdk-1dgd)
+(https://github.com/sateeshs/swarmion)
+
+## Chat bot
+
+(Building AI chatbots using Amazon Lex and Amazon Kendra for filtering query results based on user context)[https://aws.amazon.com/blogs/machine-learning/building-ai-chatbots-using-amazon-lex-and-amazon-kendra-for-filtering-query-results-based-on-user-context/]

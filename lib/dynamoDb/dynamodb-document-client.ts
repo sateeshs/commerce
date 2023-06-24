@@ -1,5 +1,5 @@
-import {DeleteItemCommandInput, DynamoDBClient, DynamoDBClientConfig, QueryCommand, ScanCommand, ScanCommandInput} from "@aws-sdk/client-dynamodb";
-import {DeleteCommand, DynamoDBDocumentClient, PutCommand, PutCommandInput, QueryCommandInput, ScanCommandOutput, TranslateConfig} from "@aws-sdk/lib-dynamodb";
+import {BatchExecuteStatementCommand, DeleteItemCommandInput, DynamoDBClient, DynamoDBClientConfig, QueryCommand, ScanCommand, ScanCommandInput} from "@aws-sdk/client-dynamodb";
+import {BatchExecuteStatementCommandInput, BatchWriteCommand, BatchWriteCommandInput, DeleteCommand, DynamoDBDocumentClient, PutCommand, PutCommandInput, QueryCommandInput, ScanCommandOutput, TranslateConfig} from "@aws-sdk/lib-dynamodb";
 import {unmarshall} from "@aws-sdk/util-dynamodb";
 
 class DocumentDbClient {
@@ -7,7 +7,8 @@ class DocumentDbClient {
     private client = new DynamoDBClient(<DynamoDBClientConfig>{
         accessKeyId: process.env.DYNAMO_ACCESS_KEY,
         secretAccessKey: process.env.DYNAMO_SECRET_KEY,
-        region: process.env.DYNAMO_REGION
+        region: process.env.DYNAMO_REGION,
+        retryMode: 'adaptive'
     });
 
     private marshallOptions = {convertEmptyValues: false, removeUndefinedValues: false, convertClassInstanceToMap: false};
@@ -57,5 +58,23 @@ class DocumentDbClient {
             throw e;
         }
     }
+     
+    public async batchWrite(batchCommandInput: BatchWriteCommandInput) {
+        try {
+            const results = await this.ddbDocClient.send(new BatchWriteCommand(batchCommandInput));
+            return results;
+        } catch (error) {
+            throw error;
+        }
+    }
+        public async batchCommand(batchExecuteStatementCommandInput: BatchExecuteStatementCommandInput){
+            try {
+                const results = await this.ddbDocClient.send(new  BatchExecuteStatementCommand(batchExecuteStatementCommandInput));
+                return results;
+            } catch (error) {
+                console.log('batchInputError', JSON.stringify(error));
+                throw error;
+            }
+        }
 }
 export const documentClient = new DocumentDbClient();

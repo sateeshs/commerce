@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { PutCommandInput } from '@aws-sdk/lib-dynamodb';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { documentClient } from '../../../lib/dynamodb-document-client';
+import { documentClient } from '../../../lib/dynamoDb/dynamodb-document-client';
 import { validate } from '../../../middleware/validate';
 import { languageSchema } from '../../../schemas/languages';
 
