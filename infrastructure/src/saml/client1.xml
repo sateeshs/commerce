@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<md:EntityDescriptor xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+entityID="http://mymachine.mycompany.com:8830">
+   <md:SPSSODescriptor
+AuthnRequestsSigned="true"
+WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+      <md:KeyDescriptor use="signing">
+         <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+            <ds:X509Data>
+               <ds:X509Certificate>MIIC0TCCAbkCAQAwXDELMAkGA1UEBhMCSU4xCzAJBCgKCAQEAmEwfAFLjgDO
+                   BgNVBAoTCXJicHJpdmF0ZTELMAkGA1UECxMCUUExETAPBgNVBAMTCHJhamt1bWFyMIIBIjANBgkq
+                   hkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmEwfAFLjgDOEZk1AYPhX7dbYMXqkk4rF3uyYZeoMnnXP
+                   Ls463GzGvVPnRgjTdIzm+1QOnkTx3BBu7kxlhtze2Sr7rtHLs1FYbzXREs5aVgIPnpkfuKdR9QND
+                   aJJ1byxStnF+zI4feSYmHXsVWfHm24+FK0kCk3tSnw2/noXyW5xc2UbrGLYqaezpPSlf5WJ3isKF
+                   lQr2k+HKXh4Rid4TUmEaoZXPAcB7QtkBYnIxzzmBoFCWSSsVldPRkaw=</ds:X509Certificate>
+            </ds:X509Data>
+         </ds:KeyInfo>
+      </md:KeyDescriptor>
+      <md:NameIDFormat>
+urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
+      <md:
+AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
+Location="http://mymachine.mycompany.com:8830/router/login/loginSaml" index="0" isDefault="true" />
+   </md:SPSSODescriptor>
+</md:EntityDescriptor>
