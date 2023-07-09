@@ -1,3 +1,4 @@
+import * as cdk from 'aws-cdk-lib';
 import { Construct } from "constructs";
 import * as ec2 from 'aws-cdk-lib/aws-ec2';
 import {Role, ServicePrincipal, PolicyStatement, Effect, IRole} from "aws-cdk-lib/aws-iam";
@@ -40,8 +41,38 @@ export class ApiGatewayCognitoNlbFargate extends Construct {
             }),
             streamPrefix: 'ecs'
         });
+        
+        const getExecutionRole = (log: logs.ILogGroup, repositoryName: string): IRole => {
+            const executionRole = new Role(this, 'onyhs-ecs-execution-role', {
+                roleName: 'onyhs-ecs-execution-role',
+                assumedBy: new ServicePrincipal('ecs-taskd.amazonaws.com')
+            });
+            executionRole.addToPolicy(new PolicyStatement({actions:[
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchGetImage",
+                "ecr:GetDownloadUrlForLayer"
+            ],
+            effect: Effect.ALLOW,
+            resources: [repositoryName]}));
+            
+            executionRole.addToPolicy(new PolicyStatement({actions:[
+                "ecr:GetAuthorizationToken"
+            ],
+            effect: Effect.ALLOW,
+            resources: ['*']}));
 
-        const executionRole = this.getExecutionRole(lg, props.repositoryArn);
+            executionRole.addToPolicy(new PolicyStatement({actions:[
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+
+            ],
+            effect: Effect.ALLOW,
+            resources: [lg.logGroupArn] // Later change to loggroup
+        }));
+        return executionRole;
+        }
+
+        const executionRole = getExecutionRole(lg, props.repositoryArn);
         
         // Create a task role for connecting to s3/dv etc.
         const taskRole = new Role(this, `${props.resourcePrefix}-ecs-task-role`, {
@@ -148,7 +179,8 @@ export class ApiGatewayCognitoNlbFargate extends Construct {
                     apigwv2Alpha.CorsHttpMethod.PATCH,
                     apigwv2Alpha.CorsHttpMethod.DELETE,
                 ],
-                allowCredentials: true
+                allowCredentials: true,
+                //allowOrigins: ['http://localhost:3000']
             }
         });
 
@@ -168,9 +200,13 @@ export class ApiGatewayCognitoNlbFargate extends Construct {
         });
     }
 
-    getExecutionRole.addToPolicy(new PolicyStatement({
-        actions:[
-            "ecr:B"
-        ]
-    }))
+    // getExecutionRole.addToPolicy(new PolicyStatement({
+    //     actions:[
+    //         "ecr:BatchCheckLayerAvailability",
+    //         "ecr:BatchGetImage",
+    //         "ecr:GetDownloadUrlForLayer"
+    //     ],
+    //     effect: Effect.ALLOW,
+    //     resources: [repositoryName]
+    // }));
 }

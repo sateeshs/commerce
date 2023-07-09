@@ -50,7 +50,7 @@ const varsToString = (vars, separator = ',') => {
             .map(([k, v], i) => `${k}=${v}`)
             .join(separator);
 };
-const varString = varsToString(outputVars);
+const varString = varsToString(outputvars);
 
 const res = exec(
     `aws amplify update-app --profile '${profile}'  --app-id '${appId}'  --environment-variables '${varString}' --region '${region}'`,
