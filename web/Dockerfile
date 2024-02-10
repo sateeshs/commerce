@@ -37,7 +37,7 @@ RUN npm run build
 
 # Multi stage build process to keep the build size small
 
-FRO node:18-alpine
+FROM node:18-alpine
 # update and install latest dependencies and dubminit package 
 # add non root user
 RUN apk update && apk upgrade && apk add dumb-init && assuser -D nextuser
@@ -45,11 +45,11 @@ RUN apk update && apk upgrade && apk add dumb-init && assuser -D nextuser
 # set work dir as app
 WORKDIR /app
 
-COPY --rom=build --chown=nextuser:nextuser /app/public ./public
-COPY --rom=build --chown=nextuser:nextuser /app/.next/standalone ./
-COPY --rom=build --chown=nextuser:nextuser /app/.next/static ./.next/static
+COPY --from=build --chown=nextuser:nextuser /app/public ./public
+COPY --from=build --chown=nextuser:nextuser /app/.next/standalone ./
+COPY --from=build --chown=nextuser:nextuser /app/.next/static ./.next/static
 # Copy.env.local
-COPY --rom=build --chown=nextuser:nextuser /app/.env.local ./
+COPY --from=build --chown=nextuser:nextuser /app/.env.local ./
 
 # Set non root user
 USER nextuser
